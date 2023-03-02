@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-family: Segoe UI;
+            line-height: 20px;
+            color: whitesmoke;
+            display: table-cell;
+            padding: 13px 0px 0px 20px;
+        }
+
+        #heading {
+            background-color: rgb(88, 21, 21);
+            /* background-color: #E2231A; */
+            height: 50px;
+        }
+
+        .main {
+            margin: 18px;
+            border-radius: 4px;
+        }
+
+        #webchat {
+            position: fixed;
+            height: calc(100% - 50px);
+            width: 100%;
+            top: 50px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="heading">
+            <h1>ITSM BOT</h1>
+        </div>
+        <div id="webchat" role="main"></div>
+    </div>
+
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+
+    <script>
+        const styleOptions = {
+            botAvatarInitials: 'BT',
+            accent: '#00809d',
+            suggestedActionBorderColor: "#0E0E0E",
+            suggestedActionTextColor: "#0E0E0E",
+            botAvatarBackgroundColor: "#FFFFFF",
+            botAvatarImage: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/robot-head-1623893-1374701.png?f=webp&w=256',
+        };
+
+        var theURL = "https://cbb47cc15385ef4e98ebaab692d5cc.d9.environment.api.powerplatform.com/powervirtualagents/bots/17692fb6-007e-4da0-a8f0-94a645255090/directline/token?api-version=2022-03-01-preview";
+
+        const store = window.WebChat.createStore(
+            {},
+            ({ dispatch }) => next => action => {
+                if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
+                    dispatch({
+                        meta: {
+                            method: "keyboard",
+                        },
+                        payload: {
+                            activity: {
+                                channelData: {
+                                    postBack: true,
+                                },
+                                name: 'startConversation',
+                                type: "event"
+                            },
+                        },
+                        type: "DIRECT_LINE/POST_ACTIVITY",
+                    });
+                }
+                return next(action);
+            }
+        );
+        fetch(theURL)
+            .then(response => response.json())
+            .then(conversationInfo => {
+                window.WebChat.renderWebChat(
+                    {
+                        directLine: window.WebChat.createDirectLine({
+                            token: conversationInfo.token,
+                        }),
+                        store: store,
+                        styleOptions: styleOptions
+                    },
+                    document.getElementById('webchat')
+                );
+            })
+            .catch(err => console.error("An error occurred: " + err));
+    </script>
+</body>
+
+</html>

@@ -35,10 +35,8 @@
 
 <body class="transition-all ease-in-out delay-150 duration-300" onload="getVideoElement()">
   <!-- chatbot -->
-  <div id="chatframe" class="h-[70vh] z-50 bg-white border-[1px] rounded-lg chatbot hidden">
-    <iframe
-      src="https://web.powerva.microsoft.com/environments/cbb47cc1-5385-ef4e-98eb-aab692d5ccd9/bots/cr48b_itsmBot/webchat?__version__=2"
-      frameborder="0" style="width: 100%; height: 100%" class="rounded-lg"></iframe>
+  <div id="chatframe" class="h-[70vh] max-h-[500px] z-50 bg-white border-[1px] rounded-lg chatbot hidden">
+    <iframe src="/custom_chatbot.html" frameborder="0" style="width: 100%; height: 100%" class="rounded-lg"></iframe>
   </div>
 
   <!-- Navbar -->
@@ -66,7 +64,8 @@
           working
           with clients and consultants. </p>
         <button
-          class="text-xs px-8 font-bold p-3 border-none bg-[#f5f3f3] text-red-900 cursor-pointer hover:border hover:border-b hover:text-white hover:bg-slate-900">
+          class="text-xs px-8 font-bold p-3 border-none bg-[#f5f3f3] text-red-900 cursor-pointer hover:border hover:border-b hover:text-white hover:bg-slate-900"
+          onclick="window.location.href='https://www.redcloudconsulting.com/job_openings.html'">
           JOIN THE TEAM
         </button>
       </div>
